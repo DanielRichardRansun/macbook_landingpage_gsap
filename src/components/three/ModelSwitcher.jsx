@@ -1,6 +1,9 @@
-import { PresentationController } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import MacbookModel16 from "../models/Macbook-16";
-import { configs } from "eslint-plugin-react-hooks";
+import MacbookModel14 from "../models/Macbook-14";
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 const ANIMATION_DURATION = 1;
 const OFFSET_DISTANCE = 5;
@@ -9,8 +12,10 @@ const fadeMeshes = (group, opacity) => {
   if (!group) return;
 
   group.traverse((child) => {
-    child.material.transparent = true;
-    gsap.to(child.material, { opacity, duration: ANIMATION_DURATION });
+    if (child.material) {
+      child.material.transparent = true;
+      gsap.to(child.material, { opacity, duration: ANIMATION_DURATION });
+    }
   });
 };
 
@@ -43,25 +48,23 @@ const ModelSwitcher = ({ scale, isMobile }) => {
   }, [scale]);
 
   const controlConfig = {
-    snap: true,
-    speed: 1,
-    zoom: 1,
-    zimuth: [-Infinity, Infinity],
-    config: { mass: 1, tension: 0, friction: 0.26 },
+    enabled: true,
+    enablePan: false,
+    enableZoom: false,
+    enableRotate: true,
+    minPolarAngle: Math.PI / 6, // Batas atas (tidak bisa melihat dari bawah)
+    maxPolarAngle: Math.PI / 2, // Batas bawah (tidak bisa melihat dari atas)
   };
 
   return (
     <>
-      <PresentationController {...controlConfig}>
-        <group ref={largeMacbookRef}>
-          <MacbookModel16 scale={isMobile ? 0.05 : 0.08} />
-        </group>
-      </PresentationController>
-      <PresentationController {...controlConfig}>
-        <group ref={smallMacbookRef}>
-          <MacbookModel14 scale={isMobile ? 0.03 : 0.06} />
-        </group>
-      </PresentationController>
+      <group ref={largeMacbookRef}>
+        <MacbookModel16 scale={isMobile ? 0.05 : 0.08} />
+      </group>
+      <group ref={smallMacbookRef}>
+        <MacbookModel14 scale={isMobile ? 0.03 : 0.06} />
+      </group>
+      <OrbitControls {...controlConfig} />
     </>
   );
 };

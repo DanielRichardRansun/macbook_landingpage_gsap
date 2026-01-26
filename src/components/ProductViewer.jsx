@@ -6,11 +6,12 @@ import { OrbitControls } from "@react-three/drei";
 import MacbookModel14 from "./models/Macbook-14";
 import StudioLight from "./three/StudioLights";
 import ModelSwitcher from "./three/ModelSwitcher";
+import { useMediaQuery } from "react-responsive";
 
 const ProductViewer = () => {
   const { color, scale, setColor, setScale } = useMacbookStore();
 
-  const isMobile = useMediaQuary({ query: "(max-width: 1024px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 1024px)" });
 
   return (
     <section id="product-viewer">
