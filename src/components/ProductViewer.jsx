@@ -45,7 +45,7 @@ const ProductViewer = () => {
               className={clsx(
                 scale === 0.06
                   ? "bg-white text-black"
-                  : "bg-transparant text-white",
+                  : "bg-transparent text-white",
               )}
             >
               <p>14"</p>
@@ -55,7 +55,7 @@ const ProductViewer = () => {
               className={clsx(
                 scale === 0.08
                   ? "bg-white text-black"
-                  : "bg-transparant text-white",
+                  : "bg-transparent text-white",
               )}
             >
               <p>16"</p>
